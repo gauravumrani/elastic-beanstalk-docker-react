@@ -1,21 +1,19 @@
 name: k8s Deploy
-on:
-  push:
-    branches:
-      - master
+on: [push]
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - name: Build the code
-        run: docker build -t k8s/react .
+        run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - name: Run the Tests
         uses: actions/setup-node@v3
         with:
-          node-version: 14
-        run: npm run test -- --watchAll=false
+          node-version: "14"
+      - run: npm install
+      - run: npm run test -- --watchAll=false
+      - name: Build the code
+        run: docker build -t k8s/react .
       - name: Push the code
         run: docker run k8s/react echo "Hello world"
