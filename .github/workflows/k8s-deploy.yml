@@ -9,15 +9,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - name: Install NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: "14"
-      - name: Installing Dependencies
-        run: npm install
-      - name: Running Test Cases
-        run: npm run test -- --watchAll=false
       - name: Build Docker file
         run: docker build -t k8s/react .
-      - name: Push the code
-        run: docker run k8s/react echo "Hello world"
+      - name: Running Test Cases
+        run: docker run k8s/react npm run test -- --watchAll=false
