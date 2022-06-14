@@ -13,4 +13,9 @@ jobs:
       - name: Build the code
         run: docker build -t k8s/react .
       - name: Run the Tests
-        run: docker run k8s/react npm run test
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+        run: npm run test -- --watchAll=false
+      - name: Push the code
+        run: docker run k8s/react echo "Hello world"
