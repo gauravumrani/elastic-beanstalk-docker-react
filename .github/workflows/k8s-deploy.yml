@@ -20,7 +20,7 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: K8sreact
+          application_name: k8s-react
           environment_name: K8sreact-env
           version_label: ${{github.SHA}}
           region: us-east-1
