@@ -13,3 +13,15 @@ jobs:
         run: docker build -t k8s/react .
       - name: Running Test Cases
         run: docker run k8s/react npm run test -- --watchAll=false
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v20
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: K8sreact
+          environment_name: K8sreact-env
+          version_label: Sample
+          region: us-east-1
+          deployment_package: deploy.zip
